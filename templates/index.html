@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MNIST Digit Classifier</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            padding: 50px; 
+            background-color: #f4f4f4;
+        }
+        form { 
+            margin: 20px; 
+            padding: 15px;
+            background: white;
+            display: inline-block;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        .preview {
+            margin-top: 20px;
+        }
+        img {
+            max-width: 200px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1>Handwritten Digit Classifier</h1>
+
+    <form action="/" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*" required onchange="previewImage(event)">
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if filename %}
+        <div class="preview">
+            <h2>Uploaded Image:</h2>
+            <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Uploaded Image">
+        </div>
+    {% endif %}
+
+    {% if prediction is not none %}
+        <h2>Predicted Digit: {{ prediction }}</h2>
+    {% endif %}
+
+    <script>
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    let imgPreview = document.querySelector(".preview img");
+                    if (!imgPreview) {
+                        imgPreview = document.createElement("img");
+                        document.querySelector(".preview").appendChild(imgPreview);
+                    }
+                    imgPreview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</body>
+</html>
