@@ -3,7 +3,7 @@ This project is a Flask-based web application that classifies handwritten digits
 
 ## 🚀 Demo
 
-You can try the live demo here: [Add your deployment link if hosted]
+Refer to the screenshots:
 
 ## 📌 Features
 
